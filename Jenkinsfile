@@ -2,38 +2,36 @@
 pipeline {
     agent any
 
-    stages {
+    environment {
+        PYTHON = 'C:\\Users\\sanja\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
+    }
 
+    stages {
         stage('Check Python') {
             steps {
-                bat 'python --version'
+                bat '"%PYTHON%" --version'
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                bat 'python -m unittest -v test_game.py'
+                bat '"%PYTHON%" -m unittest -v test_game.py'
             }
         }
 
         stage('Launch Tic Tac Toe') {
             steps {
-                powershell '''
-                    Start-Process -FilePath "python" `
-                        -ArgumentList "tic_tac_toe.py" `
-                        -WorkingDirectory "$env:WORKSPACE"
-                '''
+                bat 'start "" "%PYTHON%" tic_tac_toe.py'
             }
         }
     }
 
     post {
         success {
-            echo 'Tic Tac Toe pipeline completed successfully!'
+            echo 'All stages completed successfully!'
         }
-
         failure {
-            echo 'Pipeline failed. Check the console output.'
+            echo 'Pipeline failed. Check console output.'
         }
     }
 }
