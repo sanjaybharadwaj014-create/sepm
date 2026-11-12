@@ -3,10 +3,11 @@ pipeline {
     agent any
 
     environment {
-        PYTHON = 'C:\Users\sanja\AppData\Local\Python\bin\python.exe'
+        PYTHON = 'C:\\Users\\sanja\\AppData\\Local\\Python\\bin\\python.exe'
     }
 
     stages {
+
         stage('Check Python') {
             steps {
                 bat '"%PYTHON%" --version'
@@ -30,6 +31,7 @@ pipeline {
         success {
             echo 'All stages completed successfully!'
         }
+
         failure {
             echo 'Pipeline failed. Check console output.'
         }
